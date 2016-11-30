@@ -464,7 +464,8 @@ let generate t loc =
                | Arbitrary t | Instance (t, _, _) -> t
                | Variable (t, name) -> make_a (H.T.var (iname name)) t (H.T.var (sname name))
                | Self     (t, _, _) -> make_a (H.T.var inh) t (H.T.var syn)
-	       | Tuple    (t, typs) -> H.T.tuple (map make_typ typs)
+               | Tuple    (_, [x])  -> make_typ x
+               | Tuple    (t, typs) -> H.T.tuple (map make_typ typs)
                in
                let typs = [H.T.var inh; 
                            make_a (H.T.var inh) (H.T.app (H.T.id name :: map H.T.var orig_args)) (H.T.var syn)
